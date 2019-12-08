@@ -88,7 +88,7 @@ void Game::extractWord(string fileName) {
 }
 
 bool Game::isFinished() {
-    if(this->currentState == 7) {
+    if(this->currentState == 9) {
         return true;
     }
     return false;
@@ -209,8 +209,8 @@ void Game::draw() {
                 cout << "|    _________        |\n";
                 cout << "|    |       |        |\n";
                 cout << "|    |       O        |\n";
-                cout << "|    |      /|\\       |\n";
-                cout << "|    |                |\n";
+                cout << "|    |       |        |\n";
+                cout << "|    |       |        |\n";
                 cout << "|    |                |\n";
                 cout << "|    |                |\n";
                 cout << "|    |                |\n";
@@ -225,7 +225,7 @@ void Game::draw() {
                 cout << "|    _________        |\n";
                 cout << "|    |       |        |\n";
                 cout << "|    |       O        |\n";
-                cout << "|    |      /|\\       |\n";
+                cout << "|    |      /|        |\n";
                 cout << "|    |       |        |\n";
                 cout << "|    |                |\n";
                 cout << "|    |                |\n";
@@ -236,6 +236,36 @@ void Game::draw() {
                 cout << endl;
                 break;
             case 7:
+                cout << "-----------------------\n";
+                cout << "|    _________        |\n";
+                cout << "|    |       |        |\n";
+                cout << "|    |       O        |\n";
+                cout << "|    |      /|\\       |\n";
+                cout << "|    |       |        |\n";
+                cout << "|    |                |\n";
+                cout << "|    |                |\n";
+                cout << "|    |                |\n";
+                cout << "|  __|______________  |\n";
+                cout << "-----------------------\n";
+                this->drawWord();
+                cout << endl;
+                break;
+            case 8:
+                cout << "-----------------------\n";
+                cout << "|    _________        |\n";
+                cout << "|    |       |        |\n";
+                cout << "|    |       O        |\n";
+                cout << "|    |      /|\\       |\n";
+                cout << "|    |       |        |\n";
+                cout << "|    |      /         |\n";
+                cout << "|    |                |\n";
+                cout << "|    |                |\n";
+                cout << "|  __|______________  |\n";
+                cout << "-----------------------\n";
+                this->drawWord();
+                cout << endl;
+                break;
+            case 9:
                 cout << "-----------------------\n";
                 cout << "|    _________        |\n";
                 cout << "|    |       |        |\n";
