@@ -1,15 +1,24 @@
+#ifdef __unix__
+    #define OS_WINDOWS 0
+#elif defined(_WIN32) || defined(WIN32)
+    #define OS_WINDOWS 1
+#endif
+
 #ifndef __HANGMAN_GAME_H__
 #define __HANGMAN_GAME_H__
 
 #include <iostream>
 #include <vector>
 #include <fstream>
+#include <deque>
+#include <algorithm>
 #include <time.h>
 using namespace std;
 
 class Game {
 private:
     vector<pair<char, bool>> currentWord;
+    deque<char> writtenLetters;
     bool finish;
     bool win;
     int currentState;
@@ -24,6 +33,7 @@ private:
 
     // Methods to draw
     void drawWord();
+    void drawWrittenLetters();
     void draw();
 
 public:
@@ -45,6 +55,10 @@ void Game::play() {
         char newCharacter;
         cout << "\nInsert a character (capital letters only): ";
         cin >> newCharacter;
+
+        /* Find if the letters is already written */
+        writtenLetters.push_back(newCharacter);
+
         vector<int> currentIndexes = isInWord(newCharacter);
         if(currentIndexes.size() > 0) {
             for(int index : currentIndexes) {
@@ -124,8 +138,23 @@ void Game::drawWord() {
     }
 }
 
+void Game::drawWrittenLetters() {
+    cout << "Written yet: ";
+    for(int i = 0; i < writtenLetters.size(); i++) {
+        if(i != writtenLetters.size()-1) {
+            cout << writtenLetters[i] << ", ";
+        } else {
+            cout << writtenLetters[i] << endl;
+        }
+    }
+}
+
 void Game::draw() {
-    system("clear");
+    if(OS_WINDOWS) {
+        system("cls");
+    } else {
+        system("clear");
+    }
     cout << "HANGMAN GAME\n";
     if(!win) {
         switch (currentState) {
@@ -141,8 +170,6 @@ void Game::draw() {
                 cout << "|                     |\n";
                 cout << "|                     |\n";
                 cout << "-----------------------\n";
-                this->drawWord();
-                cout << endl;
                 break;
             case 1:
                 cout << "-----------------------\n";
@@ -156,8 +183,6 @@ void Game::draw() {
                 cout << "|                     |\n";
                 cout << "|  _________________  |\n";
                 cout << "-----------------------\n";
-                this->drawWord();
-                cout << endl;
                 break;
             case 2:
                 cout << "-----------------------\n";
@@ -171,8 +196,6 @@ void Game::draw() {
                 cout << "|    |                |\n";
                 cout << "|  __|______________  |\n";
                 cout << "-----------------------\n";
-                this->drawWord();
-                cout << endl;
                 break;
             case 3:
                 cout << "-----------------------\n";
@@ -186,8 +209,6 @@ void Game::draw() {
                 cout << "|    |                |\n";
                 cout << "|  __|______________  |\n";
                 cout << "-----------------------\n";
-                this->drawWord();
-                cout << endl;
                 break;
             case 4:
                 cout << "-----------------------\n";
@@ -201,8 +222,6 @@ void Game::draw() {
                 cout << "|    |                |\n";
                 cout << "|  __|______________  |\n";
                 cout << "-----------------------\n";
-                this->drawWord();
-                cout << endl;
                 break;
             case 5:
                 cout << "-----------------------\n";
@@ -216,9 +235,6 @@ void Game::draw() {
                 cout << "|    |                |\n";
                 cout << "|  __|______________  |\n";
                 cout << "-----------------------\n";
-                this->drawWord();
-                cout << endl;
-                if(finish) {
                 break;
             case 6:
                 cout << "-----------------------\n";
@@ -232,8 +248,6 @@ void Game::draw() {
                 cout << "|    |                |\n";
                 cout << "|  __|______________  |\n";
                 cout << "-----------------------\n";
-                this->drawWord();
-                cout << endl;
                 break;
             case 7:
                 cout << "-----------------------\n";
@@ -247,8 +261,6 @@ void Game::draw() {
                 cout << "|    |                |\n";
                 cout << "|  __|______________  |\n";
                 cout << "-----------------------\n";
-                this->drawWord();
-                cout << endl;
                 break;
             case 8:
                 cout << "-----------------------\n";
@@ -262,8 +274,6 @@ void Game::draw() {
                 cout << "|    |                |\n";
                 cout << "|  __|______________  |\n";
                 cout << "-----------------------\n";
-                this->drawWord();
-                cout << endl;
                 break;
             case 9:
                 cout << "-----------------------\n";
@@ -277,12 +287,14 @@ void Game::draw() {
                 cout << "|    |                |\n";
                 cout << "|  __|______________  |\n";
                 cout << "-----------------------\n";
-                this->drawWord();
-                cout << endl;
                 break;
             }
         }
+        this->drawWord();
+        cout << endl << endl;
+        this->drawWrittenLetters();
+
     }
-}
+
 
 #endif
